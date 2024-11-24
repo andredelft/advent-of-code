@@ -24,13 +24,13 @@ def parse_input(input_string):
     ]
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     groups = parse_input(input_string)
 
     return max([sum(group) for group in groups])
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     groups = parse_input(input_string)
 
     return sum(sorted([sum(group) for group in groups])[-3:])

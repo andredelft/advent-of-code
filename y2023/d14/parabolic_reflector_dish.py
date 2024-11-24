@@ -4,7 +4,7 @@ from itertools import count
 from lib.field import Field
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     field = Field(input_string)
 
     load = 0
@@ -52,7 +52,7 @@ def get_load(field: Field):
     return load
 
 
-def part_b(input_string: str, N=1_000_000_000):
+def solve_b(input_string: str, N=1_000_000_000):
     field = Field(input_string)
     history: dict[Field, int] = dict()
 

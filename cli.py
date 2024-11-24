@@ -57,7 +57,7 @@ def get_module(year: int, day: int, test=False):
 
 def get_solution(year: int, day: int, part: int):
     m = get_module(year, day)
-    solve_fn = getattr(m, f"part_{part}")
+    solve_fn = getattr(m, f"solve_{part}")
 
     input_path = get_day_path(year, day) / "input.txt"
 
@@ -96,7 +96,7 @@ def test_solution(year: int, day: int, part: int):
     m = get_module(year, day, test=True)
 
     test_input = m.TEST_INPUT
-    solve_fn = getattr(m, f"part_{part}")
+    solve_fn = getattr(m, f"solve_{part}")
 
     click.echo(solve_fn(test_input))
 

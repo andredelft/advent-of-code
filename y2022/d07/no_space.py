@@ -30,7 +30,7 @@ def parse_input(input_string):
     return FileSystem.from_terminal_output(input_string)
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     fs = parse_input(input_string)
     cumulative_size = 0
     for name in fs.walk():
@@ -42,7 +42,7 @@ def part_a(input_string=TEST_INPUT):
     return cumulative_size
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     fs = parse_input(input_string)
     used_space = sum(fs.size(name) for name in fs.ls(quiet=True))
     unused_space = 70_000_000 - used_space

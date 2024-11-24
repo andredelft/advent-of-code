@@ -1,4 +1,4 @@
-from y2023.d01.trebuchet import part_a, part_b
+from y2023.d01.trebuchet import solve_a, solve_b
 
 TEST_INPUT_A = """\
 1abc2
@@ -20,8 +20,8 @@ EXPECTED_SOLUTION_B = 281
 
 
 def test_a():
-    assert part_a(TEST_INPUT_A) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT_A) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT_B) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT_B) == EXPECTED_SOLUTION_B

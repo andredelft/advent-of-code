@@ -51,7 +51,7 @@ def print_crates(crates: Crates):
         print(" ".join([f"[{crate}]" if crate else "   " for crate in row]))
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     crates, moves = parse_input(input_string)
 
     for num_crates, stack_from, stack_to in moves:
@@ -64,7 +64,7 @@ def part_a(input_string=TEST_INPUT):
     return "".join(stack[-1] for stack in crates)
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     crates, moves = parse_input(input_string)
 
     for num_crates, stack_from, stack_to in moves:

@@ -1,4 +1,4 @@
-from y2023.d18.lavaduct_lagoon import part_a, part_b
+from y2023.d18.lavaduct_lagoon import solve_a, solve_b
 
 TEST_INPUT = """\
 R 6 (#70c710)
@@ -21,8 +21,8 @@ EXPECTED_SOLUTION_B = 952408144115
 
 
 def test_a():
-    assert part_a(TEST_INPUT) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT) == EXPECTED_SOLUTION_B

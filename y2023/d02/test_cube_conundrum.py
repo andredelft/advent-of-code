@@ -1,4 +1,4 @@
-from y2023.d02.cube_conundrum import part_a, part_b
+from y2023.d02.cube_conundrum import solve_a, solve_b
 
 TEST_INPUT = """\
 Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -12,8 +12,8 @@ EXPECTED_SOLUTION_B = 2286
 
 
 def test_a():
-    assert part_a(TEST_INPUT) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT) == EXPECTED_SOLUTION_B

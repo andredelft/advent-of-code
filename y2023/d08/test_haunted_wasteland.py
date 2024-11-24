@@ -1,4 +1,4 @@
-from y2023.d08.haunted_wasteland import part_a, part_b
+from y2023.d08.haunted_wasteland import solve_a, solve_b
 
 TEST_INPUT_1 = """\
 RL
@@ -35,8 +35,8 @@ EXPECTED_SOLUTION_B = 6
 
 
 def test_a():
-    assert part_a(TEST_INPUT_2) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT_2) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT_3) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT_3) == EXPECTED_SOLUTION_B

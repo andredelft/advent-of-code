@@ -118,7 +118,7 @@ def parse_input(input_string: str):
     return field, start
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     field, start = parse_input(input_string)
 
     coords = [start]
@@ -141,7 +141,7 @@ def part_a(input_string: str):
     return num_steps
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     field, start = parse_input(input_string)
     loop, visited = get_loop(field, start)
 

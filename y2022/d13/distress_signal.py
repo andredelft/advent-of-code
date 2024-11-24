@@ -49,7 +49,7 @@ def parse_input(input_string: str):
         yield [eval(line) for line in pair.split("\n")]
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     indices_sum = 0
 
     for i, pair in enumerate(parse_input(input_string), start=1):
@@ -59,7 +59,7 @@ def part_a(input_string=TEST_INPUT):
     return indices_sum
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     index_1 = 1
     index_2 = 2
     for pair in parse_input(input_string):

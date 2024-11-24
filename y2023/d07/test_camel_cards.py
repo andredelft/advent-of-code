@@ -1,4 +1,4 @@
-from y2023.d07.camel_cards import part_a, part_b
+from y2023.d07.camel_cards import solve_a, solve_b
 
 TEST_INPUT = """\
 32T3K 765
@@ -12,8 +12,8 @@ EXPECTED_SOLUTION_B = 5905
 
 
 def test_a():
-    assert part_a(TEST_INPUT) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT) == EXPECTED_SOLUTION_B

@@ -18,7 +18,7 @@ def parse_input(input_string: str):
         yield direction, int(num_steps), RE_HEX.search(color).group(1)
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     j, i = (0, 0)
     boundary_nodes = [(j, i)]
     boundary_length = 0
@@ -39,7 +39,7 @@ def part_a(input_string: str):
     return get_area(boundary_nodes, boundary_length)
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     j, i = (0, 0)
     boundary_nodes = [(j, i)]
     boundary_length = 0

@@ -15,9 +15,9 @@ def get_fuel(mass, recursive=False):
     return fuel
 
 
-def part_a(input_string):
+def solve_a(input_string):
     return sum(get_fuel(mass) for mass in parse_input(input_string))
 
 
-def part_b(input_string):
+def solve_b(input_string):
     return sum(get_fuel(mass, recursive=True) for mass in parse_input(input_string))

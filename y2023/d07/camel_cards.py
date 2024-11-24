@@ -15,11 +15,11 @@ def parse_input(input_string: str, with_jokers=False):
         yield Hand(cards, with_jokers), int(bid)
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     hands_with_bidding = parse_input(input_string)
     return get_rank(hands_with_bidding)
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     hands_with_bidding = parse_input(input_string, with_jokers=True)
     return get_rank(hands_with_bidding)

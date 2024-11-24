@@ -16,13 +16,13 @@ def parse_input(input_string: str):
     return cards
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     cards = parse_input(input_string)
 
     return sum(floor(2 ** (len(set.intersection(*nums)) - 1)) for nums in cards)
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     cards = parse_input(input_string)
     wins = Counter()
 

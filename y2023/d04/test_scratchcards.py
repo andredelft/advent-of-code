@@ -1,4 +1,4 @@
-from y2023.d04.scratchcards import part_a, part_b
+from y2023.d04.scratchcards import solve_a, solve_b
 
 TEST_INPUT = """\
 Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
@@ -13,8 +13,8 @@ EXPECTED_SOLUTION_B = 30
 
 
 def test_a():
-    assert part_a(TEST_INPUT) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT) == EXPECTED_SOLUTION_B

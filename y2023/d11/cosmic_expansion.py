@@ -19,7 +19,7 @@ def cosmic_expansion(cosmos):
     return Field(expanded_cosmos)
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     cosmos = Field(input_string)
     expanded_cosmos = cosmic_expansion(cosmos)
     print(expanded_cosmos)
@@ -33,7 +33,7 @@ def part_a(input_string: str):
     return distance_sum
 
 
-def part_b(input_string: str, expansion_coefficient=1_000_000):
+def solve_b(input_string: str, expansion_coefficient=1_000_000):
     cosmos = Field(input_string)
 
     empty_rows = set(

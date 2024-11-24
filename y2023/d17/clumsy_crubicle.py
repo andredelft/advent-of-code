@@ -36,7 +36,7 @@ def get_neighbours(node, field: Field, num_straight_range: tuple[int, int]):
         yield (new_coord, new_dir, new_num_straight), int(field[new_coord])
 
 
-def part_a(input_string: str, num_straight=(0, 3)):
+def solve_a(input_string: str, num_straight=(0, 3)):
     field = Field(input_string)
 
     # Format: (j, i), direction, num_straight
@@ -60,5 +60,5 @@ def part_a(input_string: str, num_straight=(0, 3)):
     return distance_map.get_distance(end_node)
 
 
-def part_b(input_string: str):
-    return part_a(input_string, num_straight=(4, 10))
+def solve_b(input_string: str):
+    return solve_a(input_string, num_straight=(4, 10))

@@ -50,23 +50,23 @@ def parse_input(input_string: str) -> list[Monkey]:
     return monkeys
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     monkeys = parse_input(input_string)
     for _ in range(20):
         for monkey in monkeys:
-            throw_dict = monkey.inspect()
+            throw_dict = monkey.inspect(relief_factor=3)
             for i, items in throw_dict.items():
                 monkeys[i].catch(items)
 
     return product(sorted([monkey.num_inspections for monkey in monkeys])[-2:])
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     monkeys = parse_input(input_string)
     least_common_multiple = math.lcm(*[monkey.divisible_by for monkey in monkeys])
     for _ in range(10_000):
         for monkey in monkeys:
-            throw_dict = monkey.inspect(relief_factor=least_common_multiple)
+            throw_dict = monkey.inspect(lcm=least_common_multiple)
             for i, items in throw_dict.items():
                 monkeys[i].catch(items)
 

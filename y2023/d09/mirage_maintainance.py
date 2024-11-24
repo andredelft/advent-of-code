@@ -22,7 +22,7 @@ def parse_input(input_string: str):
     ]
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     new_number_sum = 0
 
     for sequence in parse_input(input_string):
@@ -33,7 +33,7 @@ def part_a(input_string: str):
     return new_number_sum
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     new_number_sum = 0
 
     for sequence in parse_input(input_string):

@@ -30,9 +30,9 @@ def is_overlapping(first: tuple[int], second: tuple[int]) -> bool:
     return not (first[1] < second[0] or second[1] < first[0])
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     return sum(is_contained(*pair) for pair in parse_input(input_string))
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     return sum(is_overlapping(*pair) for pair in parse_input(input_string))

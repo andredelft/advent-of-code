@@ -37,7 +37,7 @@ def parse_input(input_string: str):
     return wires, wire_lengths
 
 
-def part_a(input_string):
+def solve_a(input_string):
     wires, _ = parse_input(input_string)
     segments = [pairwise(wire) for wire in wires]
 
@@ -55,7 +55,7 @@ def part_a(input_string):
     return int(least_intersection_distance)
 
 
-def part_b(input_string):
+def solve_b(input_string):
     wires, wire_lengths = parse_input(input_string)
     segments = [pairwise(wire) for wire in wires]
 

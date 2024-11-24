@@ -31,7 +31,7 @@ def parse_input(input_string: str):
         yield direction, int(num_moves)
 
 
-def part_a(input_string=TEST_INPUT_A):
+def solve_a(input_string=TEST_INPUT_A):
     rope = Rope(2)
     moves = parse_input(input_string)
 
@@ -42,7 +42,7 @@ def part_a(input_string=TEST_INPUT_A):
     return len(rope.tail_history)
 
 
-def part_b(input_string=TEST_INPUT_B):
+def solve_b(input_string=TEST_INPUT_B):
     rope = Rope(10)
     moves = parse_input(input_string)
 

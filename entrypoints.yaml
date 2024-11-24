@@ -3,6 +3,26 @@
   2: program_alarm
   3: crossed_wires
   4: secure_container
+2021:
+  1: sonar_sweep
+  2: dive
+  3: binary_diagnostic
+  4: giant_squid
+  5: hydrothermal_venture
+  6: lanternfish
+  7: whale_treachery
+  8: seven_segment_search
+  9: smoke_basin
+  10: syntax_scoring
+  11: dumbo_octopus
+  12: passage_pathing
+  13: transparent_origami
+  14: extended_polymerization
+  15: chiton
+  16: packet_decoder
+  17: trick_shot
+  18: snailfish
+  19: beacon_scanner
 2022:
   1: calorie_counting
   2: rock_paper_scissors

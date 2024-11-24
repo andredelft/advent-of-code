@@ -155,7 +155,7 @@ def parse_input(input_string: str):
         yield parts[0], int(parts[1]) if len(parts) > 1 else None
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     vs = VideoSystem()
 
     for command_name, value in parse_input(input_string):
@@ -164,7 +164,7 @@ def part_a(input_string=TEST_INPUT):
     return sum(vs.interesting_signal_strengths)
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     vs = VideoSystem()
 
     for command_name, value in parse_input(input_string):

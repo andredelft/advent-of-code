@@ -49,13 +49,13 @@ def manual_arrangement_procedure(instructions: list[str]):
     return boxes
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     instructions = parse_input(input_string)
 
     return sum(holiday_ascii_string_helper(instruction) for instruction in instructions)
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     instructions = parse_input(input_string)
     boxes = manual_arrangement_procedure(instructions)
 

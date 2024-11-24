@@ -1,8 +1,33 @@
 from lib.regex import parse_numbers
 from itertools import pairwise
 from more_itertools import chunked
-from lib.coordinates import Coordinate, Coordinates, Dimensions, get_dimensions
 import time
+
+Coordinate = tuple[int, int]
+Coordinates = set[Coordinate]
+
+Dimensions = tuple[list[int, int], list[int, int]]
+
+
+def get_dimensions(
+    coordinates: Coordinates, initial_coordinate: Coordinate | None = None
+) -> Dimensions:
+    coordinate_list = list(coordinates)
+    if not initial_coordinate:
+        initial_coordinate = coordinate_list[0]
+        coordinate_list = coordinate_list[1:]
+
+    y = [initial_coordinate[0], initial_coordinate[0]]
+    x = [initial_coordinate[1], initial_coordinate[1]]
+
+    for coord in coordinate_list:
+        y[0] = min(coord[0] - 1, y[0])
+        y[1] = max(coord[0] + 2, y[1])
+        x[0] = min(coord[1] - 1, x[0])
+        x[1] = max(coord[1] + 2, x[1])
+
+    return y, x
+
 
 TEST_INPUT = """\
 498,4 -> 498,6 -> 496,6
@@ -62,7 +87,7 @@ def drop_sand(
     return new_sand
 
 
-def part_a(input_string=TEST_INPUT, visualize=False):
+def solve_a(input_string=TEST_INPUT, visualize=False):
     rock = parse_input(input_string)
     start_position = (0, 500)
     dimensions = get_dimensions(rock, initial_coordinate=start_position)
@@ -80,7 +105,7 @@ def part_a(input_string=TEST_INPUT, visualize=False):
     return len(sand) - 1
 
 
-def part_b(input_string=TEST_INPUT, visualize=False):
+def solve_b(input_string=TEST_INPUT, visualize=False):
     rock = parse_input(input_string)
     start_position = (0, 500)
     dimensions = get_dimensions(rock, initial_coordinate=start_position)

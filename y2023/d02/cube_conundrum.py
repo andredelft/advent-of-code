@@ -22,7 +22,7 @@ def parse_input(input_string: str):
         yield game
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     valid_sum = 0
 
     for game_num, games in enumerate(parse_input(input_string), start=1):
@@ -39,7 +39,7 @@ def part_a(input_string: str):
     return valid_sum
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     power_sum = 0
 
     for games in parse_input(input_string):

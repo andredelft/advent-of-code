@@ -125,7 +125,7 @@ def find_trail(
     return trail
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     field, start, end = parse_input(input_string)
     distance_sources = dijkstra(field, start)
 
@@ -135,7 +135,7 @@ def part_a(input_string=TEST_INPUT):
     return len(trail) - 1
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     field, _, end = parse_input(input_string)
     height = len(field)
     width = len(field[0])

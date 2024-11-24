@@ -18,7 +18,7 @@ def parse_input(input_string):
     return input_string.split("\n")
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     rucksacks = parse_input(input_string)
     priority_sum = 0
 
@@ -30,7 +30,7 @@ def part_a(input_string=TEST_INPUT):
     return priority_sum
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     rucksacks = parse_input(input_string)
     priority_sum = 0
 

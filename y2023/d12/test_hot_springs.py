@@ -1,4 +1,4 @@
-from y2023.d12.hot_springs import part_a, part_b
+from y2023.d12.hot_springs import solve_a, solve_b
 
 TEST_INPUT = """\
 ???.### 1,1,3
@@ -13,8 +13,8 @@ EXPECTED_SOLUTION_B = 525152
 
 
 def test_a():
-    assert part_a(TEST_INPUT) == EXPECTED_SOLUTION_A
+    assert solve_a(TEST_INPUT) == EXPECTED_SOLUTION_A
 
 
 def test_b():
-    assert part_b(TEST_INPUT) == EXPECTED_SOLUTION_B
+    assert solve_b(TEST_INPUT) == EXPECTED_SOLUTION_B

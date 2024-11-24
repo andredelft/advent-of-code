@@ -93,13 +93,13 @@ def get_num_solutions(records):
     return num_solutions
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     records = parse_input(input_string)
 
     return sum(get_num_solutions(records))
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     records = parse_folded_input(input_string)
 
     return sum(get_num_solutions(records))

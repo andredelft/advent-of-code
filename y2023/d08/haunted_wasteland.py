@@ -14,7 +14,7 @@ def parse_input(input_string: str):
     return (instructions, node_map)
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     instructions, node_map = parse_input(input_string)
     current_node = "AAA"
 
@@ -33,7 +33,7 @@ def part_a(input_string: str):
     return num_steps
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     instructions, node_map = parse_input(input_string)
     starting_nodes = [node for node in node_map.keys() if node[2] == "A"]
 

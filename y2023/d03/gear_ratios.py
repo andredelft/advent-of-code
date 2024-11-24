@@ -4,7 +4,7 @@ from lib.field import Field
 from lib.array import product
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     field = Field(input_string)
 
     part_number_sum = 0
@@ -19,7 +19,7 @@ def part_a(input_string: str):
     return part_number_sum
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     field = Field(input_string)
 
     gears = {}

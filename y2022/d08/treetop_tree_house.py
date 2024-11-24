@@ -46,7 +46,7 @@ def add_visible_pairs(
                 break
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     forest = parse_input(input_string)
     width, height = len(forest[0]), len(forest)
 
@@ -90,7 +90,7 @@ def get_view(
     return view
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     forest = parse_input(input_string)
     width, height = len(forest[0]), len(forest)
     max_scenic_score = 0

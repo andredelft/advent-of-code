@@ -19,7 +19,7 @@ def parse_input(input_string: str):
     return input_string.split("\n")
 
 
-def part_a(input_string):
+def solve_a(input_string):
     calibration_value = 0
 
     for line in parse_input(input_string):
@@ -29,7 +29,7 @@ def part_a(input_string):
     return calibration_value
 
 
-def part_b(input_string):
+def solve_b(input_string):
     calibration_value = 0
 
     for line in parse_input(input_string):

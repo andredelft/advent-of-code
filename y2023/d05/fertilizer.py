@@ -24,7 +24,7 @@ def parse_input(input_string: str):
     return seeds, maps
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     seeds, maps = parse_input(input_string)
     min_location = -1
 
@@ -55,7 +55,7 @@ def part_a(input_string: str):
     return min_location
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     seeds, maps = parse_input(input_string)
     location = 0
 

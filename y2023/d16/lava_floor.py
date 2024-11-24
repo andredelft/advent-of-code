@@ -74,7 +74,7 @@ def get_ray_path(ray: Ray, field: Field):
     return visited
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     field = Field(input_string)
     ray = ((0, 0), "E")  # Entered (0, 0) eastward
     visited = get_ray_path(ray, field)
@@ -86,7 +86,7 @@ def part_a(input_string: str):
     return len(visited)
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     field = Field(input_string)
 
     max_visited = set()

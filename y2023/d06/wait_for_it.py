@@ -44,7 +44,7 @@ def parse_kerned_input(input_string: str):
     return time, record_distance
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     times, record_distances = parse_input(input_string)
 
     record_product = 1
@@ -60,7 +60,7 @@ def part_a(input_string: str):
     return record_product
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     time, record_distance = parse_kerned_input(input_string)
 
     return find_num_record_times(time, record_distance)

@@ -1,5 +1,5 @@
 import pytest
-from y2019.d04.secure_container import part_a, part_b
+from y2019.d04.secure_container import solve_a, solve_b
 
 
 TEST_INPUT = """\\
@@ -21,9 +21,9 @@ def expected_solution_b():
     return None
 
 
-def test_part_a(test_input, expected_solution_a):
-    assert part_a(test_input) == expected_solution_a
+def test_solve_a(test_input, expected_solution_a):
+    assert solve_a(test_input) == expected_solution_a
 
 
-def test_part_b(test_input, expected_solution_b):
-    assert part_b(test_input) == expected_solution_b
+def test_solve_b(test_input, expected_solution_b):
+    assert solve_b(test_input) == expected_solution_b

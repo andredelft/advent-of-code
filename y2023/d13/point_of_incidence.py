@@ -38,7 +38,7 @@ def check_mirror_with_smudge(lines: list[str], index: int):
     return smudge_found
 
 
-def part_a(input_string: str):
+def solve_a(input_string: str):
     fields = parse_input(input_string)
 
     mirror_number = 0
@@ -67,7 +67,7 @@ def part_a(input_string: str):
     return mirror_number
 
 
-def part_b(input_string: str):
+def solve_b(input_string: str):
     fields = parse_input(input_string)
 
     mirror_number = 0

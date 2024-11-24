@@ -13,7 +13,7 @@ DRAWS = {"A X", "B Y", "C Z"}
 VALUES = {"X": 1, "Y": 2, "Z": 3}
 
 
-def part_a(input_string=TEST_INPUT):
+def solve_a(input_string=TEST_INPUT):
     matches = parse_input(input_string)
     score = 0
     for match in matches:
@@ -30,7 +30,7 @@ DRAW = {"A": 1, "B": 2, "C": 3}
 LOSS = {"A": 3, "B": 1, "C": 2}
 
 
-def part_b(input_string=TEST_INPUT):
+def solve_b(input_string=TEST_INPUT):
     matches = [match.split(" ") for match in parse_input(input_string)]
     score = 0
     for opponent, outcome in matches:
