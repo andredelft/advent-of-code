@@ -1,0 +1,6 @@
+advent-of-code-data==2.*
+click==8.*
+PyYAML==6.*
+tqdm==4.*
+more-itertools==10.*
+setuptools
