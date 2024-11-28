@@ -2,7 +2,7 @@ import pytest
 from $module import solve_a, solve_b
 
 
-TEST_INPUT = """\\
+TEST_INPUT = """\
 """
 
 

@@ -8,6 +8,19 @@ from .field import Coordinate
 Number = int | float
 
 
+def get_nth_digit(number: int, n: int, with_leading_zeros=True):
+    number_str = str(number)
+    number_size = len(number_str)
+
+    if n >= number_size:
+        if not with_leading_zeros:
+            raise ValueError(f"Number {number} doesn't have digit {n}")
+
+        return 0
+
+    return int(number_str[number_size - (n + 1)])
+
+
 def solve_quadratic(a: Number, b: Number, c: Number) -> list[float]:
     """Solve the quadratic equation `ax ** 2 + bx + c == 0` with `a != 0`"""
 

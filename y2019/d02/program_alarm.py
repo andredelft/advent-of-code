@@ -1,33 +1,10 @@
-from collections import Counter
 from itertools import product
+from y2019.intcode import Intcode
+from lib.regex import parse_numbers
 
 
 def parse_input(input_string: str):
-    program = [int(n) for n in input_string.split(",")]
-
-    return program
-
-
-def intcode(program: list[int]):
-    pointer = 0
-
-    while True:
-        match program[pointer]:
-            case 1 | 2 as opcode:
-                # Parameters
-                p_1, p_2, p_3 = program[pointer + 1 : pointer + 4]
-
-                n_1 = program[p_1]
-                n_2 = program[p_2]
-
-                program[p_3] = n_1 + n_2 if opcode == 1 else n_1 * n_2
-                pointer += 4
-            case 99:
-                break
-            case _ as opcode:
-                raise ValueError(f"Unknown opcode: {opcode}")
-
-    return program[0]
+    return parse_numbers(input_string)
 
 
 def solve_a(input_string, restore_1202=True):
@@ -37,7 +14,9 @@ def solve_a(input_string, restore_1202=True):
         program[1] = 12
         program[2] = 2
 
-    return intcode(program)
+    intcode = Intcode(program)
+    intcode.run()
+    return intcode.program[0]
 
 
 def solve_b(input_string, desired_output=19690720):
@@ -49,5 +28,7 @@ def solve_b(input_string, desired_output=19690720):
         memory[1] = noun
         memory[2] = verb
 
-        if intcode(memory) == desired_output:
+        intcode = Intcode(memory)
+        intcode.run()
+        if intcode.program[0] == desired_output:
             return 100 * noun + verb
