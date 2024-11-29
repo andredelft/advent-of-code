@@ -1,6 +1,5 @@
 import pytest
 from y2019.intcode import Intcode
-from lib.regex import parse_numbers
 
 
 # Day 5, part a
@@ -27,7 +26,7 @@ def multiply_program():
 
 def test_multiply_program(multiply_program):
     multiply_program.run()
-    assert multiply_program.program[4] == 99
+    assert multiply_program.memory[4] == 99
 
 
 # Day 5, part b
@@ -44,9 +43,8 @@ small_eight_comparison_programs = [
 ]
 
 
-@pytest.mark.parametrize("test_input", small_eight_comparison_programs)
-def test_small_eight_comparison_programs(test_input):
-    program, expected_response = test_input
+@pytest.mark.parametrize("program,expected_response", small_eight_comparison_programs)
+def test_small_eight_comparison_programs(program, expected_response):
     intcode = Intcode(program)
 
     assert intcode.run(8, reset=True) == expected_response

@@ -16,7 +16,7 @@ def solve_a(input_string, restore_1202=True):
 
     intcode = Intcode(program)
     intcode.run()
-    return intcode.program[0]
+    return intcode.memory[0]
 
 
 def solve_b(input_string, desired_output=19690720):
@@ -30,5 +30,5 @@ def solve_b(input_string, desired_output=19690720):
 
         intcode = Intcode(memory)
         intcode.run()
-        if intcode.program[0] == desired_output:
+        if intcode.memory[0] == desired_output:
             return 100 * noun + verb
