@@ -32,7 +32,7 @@ def test_multiply_program(multiply_program):
 
 # Day 5, part b
 
-small_eight_compare_programs = [
+small_eight_comparison_programs = [
     # Using position mode, consider whether the input is equal to 8; output 1 (if it is) or 0 (if it is not).
     ([3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8], 1),
     # Using position mode, consider whether the input is less than 8; output 1 (if it is) or 0 (if it is not).
@@ -44,8 +44,8 @@ small_eight_compare_programs = [
 ]
 
 
-@pytest.mark.parametrize("test_input", small_eight_compare_programs)
-def test_small_eight_compare_program(test_input):
+@pytest.mark.parametrize("test_input", small_eight_comparison_programs)
+def test_small_eight_comparison_programs(test_input):
     program, expected_response = test_input
     intcode = Intcode(program)
 
@@ -61,7 +61,7 @@ jump_tests = [
 
 
 @pytest.mark.parametrize("program", jump_tests)
-def test_small_eight_compare_program(program):
+def test_jump_tests(program):
     intcode = Intcode(program)
 
     assert intcode.run(0, reset=True) == 0
