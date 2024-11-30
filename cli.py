@@ -88,6 +88,13 @@ arg_selector = click.argument("selector", nargs=-1)
 def prepare(module_name, selector):
     year, day, _ = identify_puzzle(selector)
 
+    try:
+        entrypoints[year, day]
+    except KeyError:
+        pass
+    else:
+        raise click.ClickException(f"Year {year} day {day} already exists")
+
     input_data = get_data(year=year, day=day)
     solution_template, test_template = get_templates()
 
