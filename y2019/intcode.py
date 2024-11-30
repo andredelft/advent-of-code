@@ -8,22 +8,26 @@ class IntcodeException(Exception):
 
 class IntcodeMemory:
     def __init__(self, initial_state: list[int] = []):
-        self.state = initial_state.copy()
+        self._state = initial_state.copy()
 
-    def _add_items(self, n):
-        self.state += [0] * n
+    def _expand(self, index):
+        """Expand memory with zeros for an index value that exceeds current memory"""
+        if index >= len(self._state):
+            self._state += [0] * (index + 1 - len(self._state))
 
     def __getitem__(self, index: int):
-        if index >= len(self.state):
-            self._add_items(index + 1 - len(self.state))
+        self._expand(index)
 
-        return self.state[index]
+        return self._state[index]
 
     def __setitem__(self, index: int, value: int):
-        if index >= len(self.state):
-            self._add_items(index + 1 - len(self.state))
+        self._expand(index)
 
-        self.state[index] = value
+        self._state[index] = value
+
+    def __iter__(self):
+        for value in self._state:
+            yield value
 
 
 class Intcode:
