@@ -2,6 +2,30 @@ from lib.regex import parse_numbers
 from lib.math import get_nth_digit
 
 
+class IntcodeException(Exception):
+    pass
+
+
+class IntcodeMemory:
+    def __init__(self, initial_state: list[int] = []):
+        self.state = initial_state.copy()
+
+    def _add_items(self, n):
+        self.state += [0] * n
+
+    def __getitem__(self, index: int):
+        if index >= len(self.state):
+            self._add_items(index + 1 - len(self.state))
+
+        return self.state[index]
+
+    def __setitem__(self, index: int, value: int):
+        if index >= len(self.state):
+            self._add_items(index + 1 - len(self.state))
+
+        self.state[index] = value
+
+
 class Intcode:
     def __init__(self, program: list[int]):
         self.program = program
@@ -9,9 +33,11 @@ class Intcode:
 
     def reset(self):
         self.pointer = 0
-        self.memory = self.program.copy()
+        self.memory = IntcodeMemory(self.program)
         self.value = None
         self.current_instruction = 0
+        self.current_instruction_pointer = 0
+        self.relative_base = 0
 
     def _read_next(self):
         """Read next integer from pointer position, and move pointer one step."""
@@ -25,40 +51,66 @@ class Intcode:
         self.pointer += num_positions
         return output
 
-    def _get_param(self, parameter_position=2):
+    def _get_param(self, mode="r"):
         value = self._read_next()
+        parameter_position = 1 + self.pointer - self.current_instruction_pointer
 
         match get_nth_digit(self.current_instruction, parameter_position):
             case 0:  # Position mode
-                return self.memory[value]
-            case 1:  # Immediate mode
-                return value
-            case _ as parameter_mode:
-                raise ValueError(f"Parameter mode {parameter_mode} not recognized")
+                pointer = value
+            case 1:  # Immediate mode (only in read mode, so we can return it directly)
+                if mode == "w":
+                    raise IntcodeException("Parameter mode 1 does not support writing")
 
-    def _get_params(self, num_params: int):
+                return value
+            case 2:  # Relative mode
+                pointer = self.relative_base + value
+            case _ as parameter_mode:
+                raise IntcodeException(
+                    f"Parameter mode {parameter_mode} not recognized"
+                )
+
+        match mode:
+            case "r":  # Read value at pointer position from memory
+                return self.memory[pointer]
+            case "w":  # Return pointer position for writing
+                return pointer
+            case _ as mode:
+                raise IntcodeException(f"Mode {mode} not supported")
+
+    def _get_params(self, num_params: int, *args, **kwargs):
         parameter_position = 2
         params: list[int] = []
 
         for _ in range(num_params):
-            param = self._get_param(parameter_position)
+            param = self._get_param(*args, **kwargs)
             params.append(param)
             parameter_position += 1
 
         return params
 
-    def run(self, *program_inputs: list[int], reset=False, pause_on_input=False):
+    def run(
+        self,
+        *program_inputs: list[int],
+        reset=False,
+        pause_on_input=False,
+        output_as_array=False,
+    ):
         program_inputs = list(program_inputs)
+
+        if output_as_array:
+            self.value = []
 
         while True:
             self.current_instruction = self._read_next()
+            self.current_instruction_pointer = self.pointer
 
             match self.current_instruction % 100:
                 # Day 2
                 case 1 | 2 as opcode:
                     # Add (1) or multiply (2) the numbers at positions p1 and p2 and write the output to p3
                     p1, p2 = self._get_params(2)
-                    p3 = self._read_next()
+                    p3 = self._get_param("w")
 
                     self.memory[p3] = p1 + p2 if opcode == 1 else p1 * p2
 
@@ -70,13 +122,18 @@ class Intcode:
                         self.pointer -= 1
                         return
                     else:
-                        raise ValueError("Additional input is required")
+                        raise IntcodeException("Additional input is required")
 
-                    p1 = self._read_next()
+                    p1 = self._get_param("w")
 
                     self.memory[p1] = program_input
                 case 4:  # Write parameter value to output
-                    self.value = self._get_param()
+                    p1 = self._get_param()
+
+                    if output_as_array:
+                        self.value.append(p1)
+                    else:
+                        self.value = p1
 
                 # Day 5, part b
                 case 5:  # Jump to second paramter if first is non-zero
@@ -91,20 +148,26 @@ class Intcode:
                         self.pointer = p2
                 case 7:  # Set value of
                     p1, p2 = self._get_params(2)
-                    p3 = self._read_next()
+                    p3 = self._get_param("w")
 
                     self.memory[p3] = int(p1 < p2)
                 case 8:  # Equals
                     p1, p2 = self._get_params(2)
-                    p3 = self._read_next()
+                    p3 = self._get_param("w")
 
                     self.memory[p3] = int(p1 == p2)
+
+                # Day 9
+                case 9:
+                    p1 = self._get_param()
+
+                    self.relative_base += p1
 
                 # Day 2
                 case 99:
                     break
                 case _ as opcode:
-                    raise ValueError(f"Unknown opcode: {opcode}")
+                    raise IntcodeException(f"Unknown opcode: {opcode}")
 
         program_output = self.value
 

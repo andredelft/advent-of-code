@@ -12,9 +12,9 @@ PART_A_TESTS = [
 ]
 
 
-@pytest.fixture
-def expected_solution_b():
-    return None
+@pytest.mark.parametrize("test_input,expected_response", PART_A_TESTS)
+def test_solve_a(test_input, expected_response):
+    assert solve_a(test_input) == expected_response
 
 
 PART_B_TESTS = [
@@ -27,11 +27,6 @@ PART_B_TESTS = [
         18216,
     ),
 ]
-
-
-@pytest.mark.parametrize("test_input,expected_response", PART_A_TESTS)
-def test_solve_a(test_input, expected_response):
-    assert solve_a(test_input) == expected_response
 
 
 @pytest.mark.parametrize("test_input,expected_response", PART_B_TESTS)
