@@ -18,12 +18,12 @@ def test_input():
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 2
 
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 4
 
 
 def test_solve_a(test_input, expected_solution_a):
