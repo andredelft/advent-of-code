@@ -2,6 +2,9 @@ from lib.field import Field, Coordinate
 
 
 def find_xmas(field: Field, coord: Coordinate, neighbour: Coordinate):
+    if field[neighbour] != "M":
+        return False
+
     delta = neighbour - coord
 
     a_coordinate = neighbour + delta
@@ -14,7 +17,10 @@ def find_xmas(field: Field, coord: Coordinate, neighbour: Coordinate):
 
 
 def find_x_mas(field: Field, coord: Coordinate):
-    corners = list(field.coords_around(*coord, horizontal=False))
+    if field[coord] != "A":
+        return False
+
+    corners = [coord for coord in field.coords_around(*coord, horizontal=False)]
 
     if sorted([field[corner] for corner in corners]) == ["M", "M", "S", "S"]:
         m_coords = [corner for corner in corners if field[corner] == "M"]
@@ -22,32 +28,29 @@ def find_x_mas(field: Field, coord: Coordinate):
         # Check if m_coords share a coordinate, then they are on the same line
         return m_coords[0][0] == m_coords[1][0] or m_coords[0][1] == m_coords[1][1]
 
-
-def parse_input(input_string: str):
-    return Field(input_string)
+    return False
 
 
 def solve_a(input_string: str):
-    field = parse_input(input_string)
+    field = Field(input_string)
+
     num_xmas = 0
 
     for coord, value in field.enumerate():
-        if value == "X":
-            for neighbour in field.coords_around(*coord):
-                if field[neighbour] == "M":
-                    if find_xmas(field, coord, neighbour):
-                        num_xmas += 1
+        if value != "X":
+            continue
+
+        num_xmas += sum(
+            find_xmas(field, coord, neighbour)
+            for neighbour in field.coords_around(*coord)
+        )
 
     return num_xmas
 
 
 def solve_b(input_string: str):
-    field = parse_input(input_string)
-    num_x_mas = 0
+    field = Field(input_string)
 
-    for coord, value in field.enumerate():
-        if value == "A":
-            if find_x_mas(field, coord):
-                num_x_mas += 1
+    num_x_mas = sum(find_x_mas(field, coord) for coord in field.coords())
 
     return num_x_mas
