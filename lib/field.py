@@ -30,6 +30,14 @@ class Field(object):
         return self.height * self.width
 
     def __getitem__(self, coord: Coordinate):
+        if (
+            coord[0] < 0
+            or coord[1] < 0
+            or coord[0] >= self.height
+            or coord[1] >= self.width
+        ):
+            raise IndexError("Field index out of range")
+
         return self.field[coord[0]][coord[1]]
 
     def __setitem__(self, key: Coordinate, value):
@@ -70,6 +78,7 @@ class Field(object):
         self,
         y: int | list[int, int] | tuple[int, int],
         x: int | list[int, int] | tuple[int, int],
+        horizontal=True,
         diagonal=True,
     ):
         if isinstance(y, list) or isinstance(y, tuple):
@@ -89,28 +98,28 @@ class Field(object):
         if diagonal and top >= 0 and lft >= 0:
             yield Coordinate(top, lft)
 
-        if top >= 0:
+        if horizontal and top >= 0:
             for i in range(lft + 1, rgt):
                 yield Coordinate(top, i)
 
         if diagonal and top >= 0 and rgt < self.width:
             yield Coordinate(top, rgt)
 
-        if rgt < self.width:
+        if horizontal and rgt < self.width:
             for j in range(top + 1, btm):
                 yield Coordinate(j, rgt)
 
         if diagonal and btm < self.height and rgt < self.width:
             yield Coordinate(btm, rgt)
 
-        if btm < self.height:
+        if horizontal and btm < self.height:
             for i in reversed(range(lft + 1, rgt)):
                 yield Coordinate(btm, i)
 
         if diagonal and btm < self.height and lft >= 0:
             yield Coordinate(btm, lft)
 
-        if lft >= 0:
+        if horizontal and lft >= 0:
             for j in reversed(range(top + 1, btm)):
                 yield Coordinate(j, lft)
 
