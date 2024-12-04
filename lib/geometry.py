@@ -1,6 +1,33 @@
 from itertools import pairwise
+from typing import Self
 
-Coordinate = tuple[int, int]
+
+class Coordinate(tuple[int, int]):
+    def __new__(cls, y: int, x: int):
+        return super().__new__(cls, (y, x))  # changed fixes multiply not showing
+
+    def __add__(self: Self, other: Self):
+        return Coordinate(*(v1 + v2 for (v1, v2) in zip(self, other)))
+
+    def __sub__(self: Self, other: Self):
+        return Coordinate(*(v1 - v2 for (v1, v2) in zip(self, other)))
+
+    def __mul__(self, other: int):
+        if not isinstance(other, int):
+            raise ValueError("Only integer multiplication is allowed")
+
+        return Coordinate(*(v * other for v in self))
+
+    def __rmul__(self, other: int):
+        return self * other
+
+    def __floordiv__(self, other: int):
+        if not isinstance(other, int):
+            raise ValueError("Only integer division is allowed")
+
+        return Coordinate(*(v // other for v in self))
+
+
 Segment = tuple[Coordinate, Coordinate]
 
 

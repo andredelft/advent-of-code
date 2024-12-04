@@ -32,7 +32,7 @@ class Field(object):
     def __getitem__(self, coord: Coordinate):
         return self.field[coord[0]][coord[1]]
 
-    def __setitem__(self, key: tuple[int, int], value):
+    def __setitem__(self, key: Coordinate, value):
         self.field[key[0]][key[1]] = value
 
     def __iter__(self):
@@ -42,7 +42,7 @@ class Field(object):
     def coords(self) -> Generator[Coordinate, None, None]:
         for j in range(self.height):
             for i in range(self.width):
-                yield (j, i)
+                yield Coordinate(j, i)
 
     def enumerate(self):
         for coord in self.coords():
@@ -87,32 +87,32 @@ class Field(object):
             rgt = x + 1
 
         if diagonal and top >= 0 and lft >= 0:
-            yield (top, lft)
+            yield Coordinate(top, lft)
 
         if top >= 0:
             for i in range(lft + 1, rgt):
-                yield (top, i)
+                yield Coordinate(top, i)
 
         if diagonal and top >= 0 and rgt < self.width:
-            yield (top, rgt)
+            yield Coordinate(top, rgt)
 
         if rgt < self.width:
             for j in range(top + 1, btm):
-                yield (j, rgt)
+                yield Coordinate(j, rgt)
 
         if diagonal and btm < self.height and rgt < self.width:
-            yield (btm, rgt)
+            yield Coordinate(btm, rgt)
 
         if btm < self.height:
             for i in reversed(range(lft + 1, rgt)):
-                yield (btm, i)
+                yield Coordinate(btm, i)
 
         if diagonal and btm < self.height and lft >= 0:
-            yield (btm, lft)
+            yield Coordinate(btm, lft)
 
         if lft >= 0:
             for j in reversed(range(top + 1, btm)):
-                yield (j, lft)
+                yield Coordinate(j, lft)
 
     def contains(self, coord: Coordinate):
         return 0 <= coord[0] < self.height and 0 <= coord[1] < self.width
