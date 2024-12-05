@@ -1,4 +1,5 @@
 from bisect import bisect_left, insort
+from itertools import pairwise
 
 
 def split_list(obj: list, index: int) -> tuple[list, list]:
@@ -13,6 +14,10 @@ def product(obj: list[int]):
         prod *= item
 
     return prod
+
+
+def is_sorted(lst: list):
+    return all(n1 <= n2 for (n1, n2) in pairwise(lst))
 
 
 class SortedList(object):
