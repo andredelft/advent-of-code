@@ -1,5 +1,6 @@
 from itertools import pairwise
 from typing import Self
+from enum import Enum
 
 
 class Coordinate(tuple[int, int]):
@@ -26,6 +27,13 @@ class Coordinate(tuple[int, int]):
             raise ValueError("Only integer division is allowed")
 
         return Coordinate(*(v // other for v in self))
+
+
+class Direction(Enum):
+    UP = Coordinate(-1, 0)
+    RIGHT = Coordinate(0, 1)
+    DOWN = Coordinate(1, 0)
+    LEFT = Coordinate(0, -1)
 
 
 Segment = tuple[Coordinate, Coordinate]
