@@ -14,7 +14,7 @@ class Historian:
         self.position = initial_position
         self.direction = initial_direction
         self.history = {(self.position, self.direction)}
-        self.path = {self.position}
+        self.visited = {self.position}
 
         self.on_edge = False
         self.in_loop = False
@@ -31,14 +31,7 @@ class Historian:
                 self.direction = Direction.UP
 
     def move(self):
-        if self.on_edge:
-            return
-
         next_position = self.position + self.direction.value
-
-        if (next_position, self.direction) in self.history:
-            self.in_loop = True
-            return
 
         try:
             next_field_value = self.field[next_position]
@@ -48,11 +41,23 @@ class Historian:
             match next_field_value:
                 case ".":
                     self.position = next_position
-                    self.history.add((next_position, self.direction))
-                    self.path.add(next_position)
+                    self._update_history(next_position, self.direction)
                 case "#":
                     self.rotate()
                     self.move()
+
+    def walk(self):
+        while not (self.on_edge or self.in_loop):
+            self.move()
+
+    def _update_history(self, position: Coordinate, direction: Direction):
+        history_entry = (position, direction)
+
+        if history_entry in self.history:
+            self.in_loop = True
+        else:
+            self.history.add(history_entry)
+            self.visited.add(position)
 
 
 def parse_input(input_string: str):
@@ -64,37 +69,33 @@ def parse_input(input_string: str):
     return field, position
 
 
-def solve_a(input_string: str, return_path=False):
+def solve_a(input_string: str, return_visited=False):
     field, position = parse_input(input_string)
 
     historian = Historian(field, position)
 
-    while not historian.on_edge:
-        historian.move()
+    historian.walk()
 
-    if return_path:
-        return historian.path
+    if return_visited:
+        return historian.visited
 
-    return len(historian.path)
+    return len(historian.visited)
 
 
 def solve_b(input_string: str):
-    path = solve_a(input_string, return_path=True)
     field, position = parse_input(input_string)
+    visited = solve_a(input_string, return_visited=True)
+    visited.remove(position)  # Don't obstruct the historian's initial position
 
     num_loops = 0
 
-    for coord in tqdm(path, desc="Obstructing the historians path"):
-        if field[coord] != "." or coord == position:
-            continue
-
+    for coord in tqdm(visited, desc="Obstructing the historian's path"):
         obstructed_field = field.copy()
         obstructed_field[coord] = "#"
 
         historian = Historian(obstructed_field, position)
 
-        while not historian.on_edge and not historian.in_loop:
-            historian.move()
+        historian.walk()
 
         if historian.in_loop:
             num_loops += 1
