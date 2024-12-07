@@ -21,12 +21,12 @@ def test_input():
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 3749
 
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 11387
 
 
 def test_solve_a(test_input, expected_solution_a):
