@@ -43,6 +43,10 @@ def solve_quadratic(a: Number, b: Number, c: Number) -> list[float]:
 
 def iter_prime_factors(num: int):
     """Very primitive prime factorization method, works fine for prime factors < 10^6"""
+    if num < 0:
+        num *= -1
+        yield -1
+
     factor = 2
     while num != 1:
         while num % factor == 0:
