@@ -20,7 +20,7 @@ def find_x_mas(field: Field, coord: Coordinate):
     if field[coord] != "A":
         return False
 
-    corners = [coord for coord in field.coords_around(*coord, horizontal=False)]
+    corners = [coord for coord in field.coords_around(*coord, straight=False)]
 
     if sorted([field[corner] for corner in corners]) == ["M", "M", "S", "S"]:
         m_coords = [corner for corner in corners if field[corner] == "M"]

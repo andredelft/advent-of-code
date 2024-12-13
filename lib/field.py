@@ -56,6 +56,16 @@ class Field(object):
         for coord in self.coords():
             yield coord, self[coord]
 
+    def pairwise(self):
+        for coord in self.coords():
+            y, x = coord
+
+            if y != self.height - 1:
+                yield coord, Coordinate(y + 1, x)
+
+            if x != self.width - 1:
+                yield coord, Coordinate(y, x + 1)
+
     def row(self, index: int, joined=False):
         _row = self.field[index]
         return "".join(_row) if joined else _row
@@ -78,7 +88,7 @@ class Field(object):
         self,
         y: int | list[int, int] | tuple[int, int],
         x: int | list[int, int] | tuple[int, int],
-        horizontal=True,
+        straight=True,
         diagonal=True,
     ):
         if isinstance(y, list) or isinstance(y, tuple):
@@ -98,33 +108,46 @@ class Field(object):
         if diagonal and top >= 0 and lft >= 0:
             yield Coordinate(top, lft)
 
-        if horizontal and top >= 0:
+        if straight and top >= 0:
             for i in range(lft + 1, rgt):
                 yield Coordinate(top, i)
 
         if diagonal and top >= 0 and rgt < self.width:
             yield Coordinate(top, rgt)
 
-        if horizontal and rgt < self.width:
+        if straight and rgt < self.width:
             for j in range(top + 1, btm):
                 yield Coordinate(j, rgt)
 
         if diagonal and btm < self.height and rgt < self.width:
             yield Coordinate(btm, rgt)
 
-        if horizontal and btm < self.height:
+        if straight and btm < self.height:
             for i in reversed(range(lft + 1, rgt)):
                 yield Coordinate(btm, i)
 
         if diagonal and btm < self.height and lft >= 0:
             yield Coordinate(btm, lft)
 
-        if horizontal and lft >= 0:
+        if straight and lft >= 0:
             for j in reversed(range(top + 1, btm)):
                 yield Coordinate(j, lft)
 
     def contains(self, coord: Coordinate):
         return 0 <= coord[0] < self.height and 0 <= coord[1] < self.width
+
+    def is_edge(self, coord: Coordinate):
+        y, x = coord
+
+        return y in [0, self.height - 1] or x in [0, self.width - 1]
+
+    def is_corner(self, coord: Coordinate):
+        return coord in [
+            (0, 0),
+            (0, self.width - 1),
+            (self.height - 1, 0),
+            (self.height - 1, self.width - 1),
+        ]
 
     def copy(self):
         return Field([_row.copy() for _row in self.rows()])
@@ -142,16 +165,25 @@ def flood_fill(
     start: Coordinate,
     field: Field,
     boundary_char: str = "#",
+    field_value="",
+    straight=True,
+    diagonal=True,
 ):
     coords_to_visit = {start}
     visited: set[Coordinate] = set()
+
+    def is_inside(coord):
+        value = field[coord]
+        return value == field_value if field_value else value != boundary_char
 
     while coords_to_visit:
         new_coords_to_visit = set()
         for coord in coords_to_visit:
             visited.add(coord)
-            for coord in field.coords_around(*coord):
-                if coord not in visited and field[coord] != boundary_char:
+            for coord in field.coords_around(
+                *coord, straight=straight, diagonal=diagonal
+            ):
+                if coord not in visited and is_inside(coord):
                     new_coords_to_visit.add(coord)
 
         coords_to_visit = new_coords_to_visit
