@@ -66,6 +66,9 @@ class Field(object):
             if x != self.width - 1:
                 yield coord, Coordinate(y, x + 1)
 
+    def find(self, value: str):
+        return next(c for c, v in self.enumerate() if v == value)
+
     def row(self, index: int, joined=False):
         _row = self.field[index]
         return "".join(_row) if joined else _row

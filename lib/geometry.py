@@ -28,12 +28,34 @@ class Coordinate(tuple[int, int]):
 
         return Coordinate(*(v // other for v in self))
 
+    def rotate(self, num_rotations=1):
+        match num_rotations % 4:
+            case 0:
+                return self
+            case 1:
+                return self.rotate_right()
+            case 2:
+                return -1 * self
+            case 3:
+                return self.rotate_left()
+
+    def rotate_right(self):
+        return Coordinate(self[1], -1 * self[0])
+
+    def rotate_left(self):
+        return Coordinate(-1 * self[1], self[0])
+
 
 class Direction(Enum):
     UP = Coordinate(-1, 0)
     RIGHT = Coordinate(0, 1)
     DOWN = Coordinate(1, 0)
     LEFT = Coordinate(0, -1)
+
+    @classmethod
+    def values(self):
+        for member in self:
+            yield member.value
 
 
 Segment = tuple[Coordinate, Coordinate]

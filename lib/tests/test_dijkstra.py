@@ -1,9 +1,15 @@
 from lib.dijkstra import dijkstra
+import pytest
 
 
-def test_dijkstra():
-    nodes = ["A", "B", "C", "D", "E"]
-    distances = {
+@pytest.fixture
+def nodes():
+    return ["A", "B", "C", "D", "E"]
+
+
+@pytest.fixture
+def distances():
+    return {
         ("A", "D"): 1,
         ("A", "B"): 6,
         ("B", "C"): 5,
@@ -12,8 +18,14 @@ def test_dijkstra():
         ("C", "E"): 5,
         ("D", "E"): 1,
     }
-    expected_path = ["C", "E", "D", "A"]
 
+
+@pytest.fixture
+def expected_path():
+    return ["C", "E", "D", "A"]
+
+
+def test_dijkstra(nodes, distances, expected_path):
     def get_neighbours(node):
         for neighbour in nodes:
             try:
