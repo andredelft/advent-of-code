@@ -163,6 +163,28 @@ class Field(object):
     def blank(cls, height, width, char="."):
         return cls([[char for _ in range(width)] for _ in range(height)])
 
+    @classmethod
+    def from_coords(cls, coords: Iterable[Coordinate], char="#", blank_char="."):
+        min_y = max_y = min_x = max_x = 0
+        coords = set(coords)
+
+        for coord in coords:
+            min_y = min(min_y, coord[0])
+            max_y = max(max_y, coord[0])
+            min_x = min(min_x, coord[1])
+            max_x = max(max_x, coord[1])
+
+        if min_x or min_y:
+            max_x -= min_x
+            max_y -= min_y
+
+            translation = Coordinate(min_y, min_x)
+            coords = (coord - translation for coord in coords)
+
+        field = cls.blank(max_y + 1, max_x + 1, char=blank_char)
+        field.draw(coords, char=char)
+        return field
+
 
 def flood_fill(
     start: Coordinate,

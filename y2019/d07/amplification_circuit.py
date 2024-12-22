@@ -13,7 +13,7 @@ def run_amplifiers(intcode: Intcode, phase_settings: list[int]):
 
 def solve_a(input_string):
     num_amplifiers = 5
-    intcode = Intcode.parse_input(input_string)
+    intcode = Intcode.parse_input(input_string, pause_on_input=True)
     max_value = 0
 
     for phase_settings in permutations(range(num_amplifiers), num_amplifiers):
@@ -26,12 +26,12 @@ def solve_a(input_string):
 def run_amplifiers_with_feedback(amplifiers: list[Intcode], phase_settings: list[int]):
     for amplifier, phase_setting in zip(amplifiers, phase_settings, strict=True):
         # Initial spin
-        amplifier.run(phase_setting, pause_on_input=True)
+        amplifier.run(phase_setting)
 
     value = 0
 
     for i, amplifier in enumerate(cycle(amplifiers)):
-        response = amplifier.run(value, pause_on_input=True)
+        response = amplifier.run(value)
         value = amplifier.value
 
         if i % len(amplifiers) == len(amplifiers) - 1 and response != None:
@@ -42,7 +42,10 @@ def run_amplifiers_with_feedback(amplifiers: list[Intcode], phase_settings: list
 
 def solve_b(input_string):
     num_amplifiers = 5
-    amplifiers = [Intcode.parse_input(input_string) for _ in range(num_amplifiers)]
+    amplifiers = [
+        Intcode.parse_input(input_string, pause_on_input=True)
+        for _ in range(num_amplifiers)
+    ]
 
     max_value = 0
 

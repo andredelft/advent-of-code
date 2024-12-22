@@ -97,9 +97,9 @@ def quine_program():
 
 
 def test_quine_program(quine_program):
-    intcode = Intcode(quine_program)
+    intcode = Intcode(quine_program, output_as_array=True)
 
-    assert intcode.run(output_as_array=True) == quine_program
+    assert intcode.run() == quine_program
 
 
 @pytest.fixture()

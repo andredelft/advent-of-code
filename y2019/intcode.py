@@ -31,9 +31,16 @@ class IntcodeMemory:
 
 
 class Intcode:
-    def __init__(self, program: list[int]):
+    def __init__(
+        self,
+        program: list[int],
+        pause_on_input=False,
+        output_as_array=False,
+    ):
         self.program = program
         self.reset()
+        self.pause_on_input = pause_on_input
+        self.output_as_array = output_as_array
 
     def reset(self):
         self.pointer = 0
@@ -93,16 +100,10 @@ class Intcode:
 
         return params
 
-    def run(
-        self,
-        *program_inputs: list[int],
-        reset=False,
-        pause_on_input=False,
-        output_as_array=False,
-    ):
+    def run(self, *program_inputs: list[int], reset=False):
         program_inputs = list(program_inputs)
 
-        if output_as_array:
+        if self.output_as_array:
             self.value = []
 
         while True:
@@ -122,7 +123,7 @@ class Intcode:
                 case 3:  # Write input to position p1
                     if program_inputs:
                         program_input = program_inputs.pop(0)
-                    elif pause_on_input:
+                    elif self.pause_on_input:
                         self.pointer -= 1
                         return
                     else:
@@ -134,7 +135,7 @@ class Intcode:
                 case 4:  # Write parameter value to output
                     p1 = self._get_param()
 
-                    if output_as_array:
+                    if self.output_as_array:
                         self.value.append(p1)
                     else:
                         self.value = p1
