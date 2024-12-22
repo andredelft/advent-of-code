@@ -10,6 +10,7 @@
   9: sensor_boost
   10: monitoring_station
   11: space_police
+  12: n_body_problem
 2021:
   1: sonar_sweep
   2: dive
