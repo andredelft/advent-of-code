@@ -5,3 +5,4 @@ tqdm==4.*
 more-itertools==10.*
 setuptools
 numpy==2.*
+readchar==4.*

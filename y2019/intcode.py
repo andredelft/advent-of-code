@@ -125,7 +125,7 @@ class Intcode:
                         program_input = program_inputs.pop(0)
                     elif self.pause_on_input:
                         self.pointer -= 1
-                        return
+                        return self.value
                     else:
                         raise IntcodeException("Additional input is required")
 
@@ -180,6 +180,10 @@ class Intcode:
             self.reset()
 
         return program_output
+
+    @property
+    def has_terminated(self):
+        return self.current_instruction == 99
 
     @classmethod
     def parse_input(cls, input_string: str, *args, **kwargs):
