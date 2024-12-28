@@ -31,10 +31,9 @@ def run_amplifiers_with_feedback(amplifiers: list[Intcode], phase_settings: list
     value = 0
 
     for i, amplifier in enumerate(cycle(amplifiers)):
-        response = amplifier.run(value)
-        value = amplifier.value
+        value = amplifier.run(value)
 
-        if i % len(amplifiers) == len(amplifiers) - 1 and response != None:
+        if i % len(amplifiers) == len(amplifiers) - 1 and amplifier.has_terminated:
             break
 
     return value

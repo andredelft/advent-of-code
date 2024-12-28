@@ -31,6 +31,12 @@ class SortedList(object):
     def __repr__(self):
         return f"<SortedList {repr(self._lst)}>"
 
+    def __len__(self):
+        return len(self._lst)
+
+    def __iter__(self):
+        return iter(self._lst)
+
     def pop(self, index):
         return self._lst.pop(index)
 

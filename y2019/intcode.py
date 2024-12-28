@@ -36,9 +36,11 @@ class Intcode:
         program: list[int],
         pause_on_input=False,
         output_as_array=False,
+        initial_pointer=0,
     ):
         self.program = program
         self.reset()
+        self.pointer = initial_pointer
         self.pause_on_input = pause_on_input
         self.output_as_array = output_as_array
 
@@ -180,6 +182,14 @@ class Intcode:
             self.reset()
 
         return program_output
+
+    def copy(self):
+        return Intcode(
+            list(self.memory),
+            pause_on_input=self.pause_on_input,
+            output_as_array=self.output_as_array,
+            initial_pointer=self.pointer,
+        )
 
     @property
     def has_terminated(self):

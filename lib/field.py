@@ -1,4 +1,5 @@
 from typing import Generator, Iterable
+from itertools import chain
 
 from .geometry import Coordinate
 
@@ -164,11 +165,15 @@ class Field(object):
         return cls([[char for _ in range(width)] for _ in range(height)])
 
     @classmethod
-    def from_coords(cls, coords: Iterable[Coordinate], char="#", blank_char="."):
+    def from_coords(
+        cls,
+        *coord_groups: list[Iterable[Coordinate]],
+        char: str | Iterable[str] = "#",
+        blank_char=".",
+    ):
         min_y = max_y = min_x = max_x = 0
-        coords = set(coords)
 
-        for coord in coords:
+        for coord in chain(*coord_groups):
             min_y = min(min_y, coord[0])
             max_y = max(max_y, coord[0])
             min_x = min(min_x, coord[1])
@@ -179,10 +184,15 @@ class Field(object):
             max_y -= min_y
 
             translation = Coordinate(min_y, min_x)
-            coords = (coord - translation for coord in coords)
+            coord_groups = [
+                (coord - translation for coord in coords) for coords in coord_groups
+            ]
 
         field = cls.blank(max_y + 1, max_x + 1, char=blank_char)
-        field.draw(coords, char=char)
+
+        for coord_group, group_char in zip(coord_groups, char, strict=True):
+            field.draw(coord_group, char=group_char)
+
         return field
 
 
