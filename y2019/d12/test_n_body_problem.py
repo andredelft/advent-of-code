@@ -26,7 +26,7 @@ def expected_solution_a():
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 4686774924
 
 
 def test_solve_a(test_input, num_steps, expected_solution_a):
