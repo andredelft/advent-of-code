@@ -48,6 +48,10 @@ class Field(object):
         for coord in self.coords():
             yield self[coord]
 
+    @property
+    def dimensions(self):
+        return (self.height, self.width)
+
     def coords(self) -> Generator[Coordinate, None, None]:
         for j in range(self.height):
             for i in range(self.width):
