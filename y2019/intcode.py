@@ -1,6 +1,9 @@
 from lib.regex import parse_numbers
 from lib.math import get_nth_digit
 
+from itertools import chain
+from typing import TypedDict, Unpack, NotRequired
+
 
 class IntcodeException(Exception):
     pass
@@ -30,19 +33,23 @@ class IntcodeMemory:
             yield value
 
 
+class IntcodeSettings(TypedDict):
+    pause_on_input: NotRequired[bool]
+    input_as_ascii: NotRequired[bool]
+    output_as_ascii: NotRequired[bool]
+    output_as_array: NotRequired[bool]
+    initial_pointer: NotRequired[int]
+
+
 class Intcode:
-    def __init__(
-        self,
-        program: list[int],
-        pause_on_input=False,
-        output_as_array=False,
-        initial_pointer=0,
-    ):
+    def __init__(self, program: list[int], **settings: Unpack[IntcodeSettings]):
         self.program = program
         self.reset()
-        self.pointer = initial_pointer
-        self.pause_on_input = pause_on_input
-        self.output_as_array = output_as_array
+        self.pointer = settings.get("initial_pointer", 0)
+        self.pause_on_input = settings.get("pause_on_input", False)
+        self.input_as_ascii = settings.get("input_as_ascii", False)
+        self.output_as_ascii = settings.get("output_as_ascii", False)
+        self.output_as_array = settings.get("output_as_array", False)
 
     def reset(self):
         self.pointer = 0
@@ -103,9 +110,10 @@ class Intcode:
         return params
 
     def run(self, *program_inputs: list[int], reset=False):
-        program_inputs = list(program_inputs)
+        if self.input_as_ascii:
+            program_inputs = [ord(char) for char in chain(*program_inputs)]
 
-        if self.output_as_array:
+        if self.output_as_array or self.output_as_ascii:
             self.value = []
 
         while True:
@@ -137,7 +145,7 @@ class Intcode:
                 case 4:  # Write parameter value to output
                     p1 = self._get_param()
 
-                    if self.output_as_array:
+                    if self.output_as_array or self.output_as_ascii:
                         self.value.append(p1)
                     else:
                         self.value = p1
@@ -178,6 +186,16 @@ class Intcode:
 
         program_output = self.value
 
+        if self.output_as_ascii:
+            output_str = ""
+            for n in program_output:
+                try:
+                    output_str += chr(n)
+                except ValueError:
+                    output_str += str(n)
+
+            program_output = output_str
+
         if reset:
             self.reset()
 
@@ -186,9 +204,11 @@ class Intcode:
     def copy(self):
         return Intcode(
             list(self.memory),
+            pointer=self.pointer,
             pause_on_input=self.pause_on_input,
+            input_as_ascii=self.input_as_ascii,
+            output_as_ascii=self.output_as_ascii,
             output_as_array=self.output_as_array,
-            initial_pointer=self.pointer,
         )
 
     @property
@@ -196,7 +216,7 @@ class Intcode:
         return self.current_instruction == 99
 
     @classmethod
-    def parse_input(cls, input_string: str, *args, **kwargs):
+    def parse_input(cls, input_string: str, **settings: Unpack[IntcodeSettings]):
         program = parse_numbers(input_string, include_negative=True)
 
-        return cls(program, *args, **kwargs)
+        return cls(program, **settings)

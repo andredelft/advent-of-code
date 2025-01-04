@@ -17,19 +17,11 @@ def get_alignment_sum(field: Field):
     return alignment_sum
 
 
-def ascii_to_str(numbers: list[int]):
-    return "".join(map(chr, numbers))
-
-
-def str_to_ascii(string: str):
-    return map(ord, string)
-
-
 def solve_a(input_string: str):
-    intcode = Intcode.parse_input(input_string, output_as_array=True)
+    intcode = Intcode.parse_input(input_string, output_as_ascii=True)
 
     value = intcode.run()
-    field = Field(ascii_to_str(value).strip())
+    field = Field(value.strip())
 
     return get_alignment_sum(field)
 
@@ -46,11 +38,9 @@ n
 def solve_b(input_string: str):
     program = parse_numbers(input_string, include_negative=True)
     program[0] = 2
-    intcode = Intcode(program, pause_on_input=True)
+    intcode = Intcode(program, pause_on_input=True, input_as_ascii=True)
 
-    test_input = str_to_ascii(INPUT)
-
-    value = intcode.run(*test_input)
+    value = intcode.run(INPUT)
 
     return value
 
