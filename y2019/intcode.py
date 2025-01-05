@@ -112,6 +112,8 @@ class Intcode:
     def run(self, *program_inputs: list[int], reset=False):
         if self.input_as_ascii:
             program_inputs = [ord(char) for char in chain(*program_inputs)]
+        else:
+            program_inputs = list(program_inputs)
 
         if self.output_as_array or self.output_as_ascii:
             self.value = []
