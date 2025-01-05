@@ -109,6 +109,20 @@ class Intcode:
 
         return params
 
+    @property
+    def formatted_output(self):
+        if self.output_as_ascii:
+            output_str = ""
+            for n in self.value:
+                try:
+                    output_str += chr(n)
+                except ValueError:
+                    output_str += str(n)
+
+            return output_str
+
+        return self.value
+
     def run(self, *program_inputs: list[int], reset=False):
         if self.input_as_ascii:
             program_inputs = [ord(char) for char in chain(*program_inputs)]
@@ -137,7 +151,8 @@ class Intcode:
                         program_input = program_inputs.pop(0)
                     elif self.pause_on_input:
                         self.pointer -= 1
-                        return self.value
+
+                        return self.formatted_output
                     else:
                         raise IntcodeException("Additional input is required")
 
@@ -186,17 +201,7 @@ class Intcode:
                 case _ as opcode:
                     raise IntcodeException(f"Unknown opcode: {opcode}")
 
-        program_output = self.value
-
-        if self.output_as_ascii:
-            output_str = ""
-            for n in program_output:
-                try:
-                    output_str += chr(n)
-                except ValueError:
-                    output_str += str(n)
-
-            program_output = output_str
+        program_output = self.formatted_output
 
         if reset:
             self.reset()
