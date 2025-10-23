@@ -10,8 +10,6 @@ test_cases = [
 ]
 
 
-@pytest.mark.parametrize("test_case", test_cases)
-def test_get_nth_digit(test_case):
-    number, n, expected = test_case
-
+@pytest.mark.parametrize("number, n, expected", test_cases)
+def test_get_nth_digit(number, n, expected):
     assert get_nth_digit(number, n) == expected
