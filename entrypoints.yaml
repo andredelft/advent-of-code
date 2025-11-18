@@ -22,6 +22,7 @@
   25: cryostasis
 2020:
   1: report_repair
+  2: password_philosophy
 2021:
   1: sonar_sweep
   2: dive
