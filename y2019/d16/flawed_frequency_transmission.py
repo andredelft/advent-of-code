@@ -1,5 +1,5 @@
-from itertools import cycle
-from typing import Generator, Iterable
+from itertools import cycle, accumulate
+from typing import Generator
 
 
 def parse_input(input_string: str):
@@ -42,4 +42,16 @@ def solve_a(input_string: str):
 
 
 def solve_b(input_string: str):
-    return solve_a(input_string * 1000)
+    input_string *= 10_000
+
+    offset = int(input_string[:7])
+
+    if not offset > len(input_string) // 2:
+        raise ValueError("Can't be solved for this offset")
+
+    signal_tail = reversed(parse_input((input_string)[offset:]))
+
+    for _ in range(100):
+        signal_tail = accumulate(signal_tail, lambda a, b: (a + b) % 10)
+
+    return int("".join(str(n) for n in reversed(list(signal_tail)[-8:])))
