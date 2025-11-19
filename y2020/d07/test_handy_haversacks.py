@@ -26,7 +26,7 @@ def expected_solution_a():
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 32
 
 
 def test_solve_a(test_input, expected_solution_a):
