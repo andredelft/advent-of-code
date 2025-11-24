@@ -52,39 +52,46 @@ class NoPossiblePath(Exception):
     pass
 
 
-def dijkstra(start_node: Node, end_node, get_neighbours, total_nodes: int = None):
+def dijkstra(
+    start_node: Node, end_node, get_neighbours, total_nodes: int = None, silent=False
+):
     distance_map = DistanceMap(start_node)
     visited = {start_node}
     unvisited = SortedList([start_node], key=distance_map.get_distance)
 
-    is_end_node = (
-        lambda node: end_node(node) if callable(end_node) else end_node == node
+    is_end_node = lambda node: (
+        end_node(node) if callable(end_node) else end_node == node
     )
 
     current_node = start_node
-    with tqdm(total=total_nodes, desc="Performing Dijkstra's algorithm") as pbar:
-        while not is_end_node(current_node):
-            try:
-                current_node = unvisited.pop(0)
-            except IndexError:
-                raise NoPossiblePath("No path possible between start and end node")
 
-            for neighbour, distance in get_neighbours(current_node):
-                current_distance = distance_map.get_distance(current_node) + distance
+    if not silent:
+        pbar = tqdm(total=total_nodes, desc="Performing Dijkstra's algorithm")
 
-                if neighbour in distance_map.nodes():
-                    existing_distance = distance_map.get_distance(neighbour)
+    while not is_end_node(current_node):
+        try:
+            current_node = unvisited.pop(0)
+        except IndexError:
+            raise NoPossiblePath("No path possible between start and end node")
 
-                    if existing_distance > current_distance:
-                        neighbour_index = unvisited.find(neighbour)
-                        unvisited.pop(neighbour_index)
-                    else:
-                        continue
+        for neighbour, distance in get_neighbours(current_node):
+            current_distance = distance_map.get_distance(current_node) + distance
 
-                distance_map.add(current_node, neighbour, current_distance)
-                unvisited.add(neighbour)
+            if neighbour in distance_map.nodes():
+                existing_distance = distance_map.get_distance(neighbour)
 
-            visited.add(current_node)
+                if existing_distance > current_distance:
+                    neighbour_index = unvisited.find(neighbour)
+                    unvisited.pop(neighbour_index)
+                else:
+                    continue
+
+            distance_map.add(current_node, neighbour, current_distance)
+            unvisited.add(neighbour)
+
+        visited.add(current_node)
+
+        if not silent:
             pbar.update()
 
     if callable(end_node):
