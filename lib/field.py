@@ -141,6 +141,17 @@ class Field(object):
             for j in reversed(range(top + 1, btm)):
                 yield Coordinate(j, lft)
 
+    def enumerate_direction(self, coord: Coordinate, direction: Coordinate):
+        new_coordinate = coord + direction
+
+        while True:
+            try:
+                yield new_coordinate, self[new_coordinate]
+            except IndexError:
+                break
+            else:
+                new_coordinate += direction
+
     def contains(self, coord: Coordinate):
         return 0 <= coord[0] < self.height and 0 <= coord[1] < self.width
 

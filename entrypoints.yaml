@@ -32,6 +32,7 @@
   8: handheld_halting
   9: encoding_error
   10: adapter_array
+  11: seating_system
 2021:
   1: sonar_sweep
   2: dive
