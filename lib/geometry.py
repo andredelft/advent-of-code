@@ -28,6 +28,10 @@ class Coordinate(tuple[int, int]):
 
         return Coordinate(*(v // other for v in self))
 
+    def __len__(self):
+        # Manhattan distance from (0, 0)
+        return sum(abs(n) for n in self)
+
     def rotate(self, num_rotations=1):
         match num_rotations % 4:
             case 0:
