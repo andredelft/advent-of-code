@@ -12,8 +12,6 @@ def run_program(program: list[tuple[str, int]], exclude=set()):
     while True:
         if pointer in instructions_ran:
             return 0, accumulator, instructions_ran
-        elif pointer == len(program) - 1:
-            return 1, accumulator, instructions_ran
 
         command, value = program[pointer]
         instructions_ran.add(pointer)
@@ -28,6 +26,9 @@ def run_program(program: list[tuple[str, int]], exclude=set()):
                 pointer += value
             case _:
                 raise ValueError(f"{command} does not exist")
+
+        if pointer == len(program):
+            return 1, accumulator, instructions_ran
 
         pointer %= len(program)
 

@@ -16,17 +16,17 @@ acc +6"""
 
 @pytest.fixture
 def test_input():
-    return 5
+    return TEST_INPUT
 
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 5
 
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 8
 
 
 def test_solve_a(test_input, expected_solution_a):
