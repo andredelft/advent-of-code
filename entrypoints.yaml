@@ -34,6 +34,7 @@
   10: adapter_array
   11: seating_system
   12: rain_risk
+  13: shuttle_search
 2021:
   1: sonar_sweep
   2: dive

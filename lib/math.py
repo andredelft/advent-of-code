@@ -140,3 +140,22 @@ infinity = Infinity()
 
 def defined_min(*args):
     return min(*args, key=lambda n: n if n or n == 0 else infinity)
+
+
+def sieve(*args: tuple[int, int]):
+    """
+    Sieve method for the Chinese remainder theorem:
+    https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Search_by_sieving
+
+    Input: `(a1, n1), (a1, n1), ...` where `N % n1 == a1`, etc. All `ni` have to be coprime.
+    """
+
+    N, period = args[0]
+
+    for a, n in args[1:]:
+        while N % n != a:
+            N += period
+
+        period *= n
+
+    return N
