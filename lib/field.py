@@ -1,5 +1,5 @@
 from typing import Generator, Iterable
-from itertools import chain
+from itertools import chain, product
 
 from .geometry import Coordinate
 
@@ -53,9 +53,8 @@ class Field(object):
         return (self.height, self.width)
 
     def coords(self) -> Generator[Coordinate, None, None]:
-        for j in range(self.height):
-            for i in range(self.width):
-                yield Coordinate(j, i)
+        for j, i in product(range(self.height), range(self.width)):
+            yield Coordinate(j, i)
 
     def enumerate(self):
         for coord in self.coords():
@@ -73,6 +72,9 @@ class Field(object):
 
     def find(self, value: str):
         return next(c for c, v in self.enumerate() if v == value)
+
+    def count(self, value: str):
+        return sum(v == value for v in self)
 
     def row(self, index: int, joined=False):
         _row = self.field[index]

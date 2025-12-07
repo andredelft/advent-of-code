@@ -1,5 +1,4 @@
 from lib.field import Field, Coordinate
-import time
 
 
 def is_accessible(coord: Coordinate, field: Field):
@@ -16,7 +15,7 @@ def solve_a(input_string: str):
 
 def solve_b(input_string: str):
     field = Field(input_string)
-    num_rolls = sum(char == "@" for char in field)
+    num_rolls = field.count("@")
 
     while True:
         new_field = field.copy()
@@ -30,4 +29,4 @@ def solve_b(input_string: str):
 
         field = new_field
 
-    return num_rolls - sum(char == "@" for char in field)
+    return num_rolls - field.count("@")
