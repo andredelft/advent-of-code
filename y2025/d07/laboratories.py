@@ -1,4 +1,4 @@
-from lib.field import Field
+from lib.field import Field, Coordinate
 from collections import Counter
 
 
@@ -9,7 +9,7 @@ def solve_a(input_string: str):
     num_splitters = 0
 
     while len(beam):
-        new_beam = set()
+        new_beam: set[Coordinate] = set()
 
         for coord in beam:
             coord_below = coord + (1, 0)

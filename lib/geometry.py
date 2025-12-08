@@ -1,16 +1,16 @@
 from itertools import pairwise
-from typing import Self
+from typing import Self, Iterable
 from enum import Enum
 
 
 class Coordinate(tuple[int, int]):
     def __new__(cls, y: int, x: int):
-        return super().__new__(cls, (y, x))  # changed fixes multiply not showing
+        return super().__new__(cls, (y, x))
 
-    def __add__(self: Self, other: Self):
+    def __add__(self: Self, other: Iterable[int]):
         return Coordinate(*(v1 + v2 for (v1, v2) in zip(self, other)))
 
-    def __sub__(self: Self, other: Self):
+    def __sub__(self: Self, other: Iterable[int]):
         return Coordinate(*(v1 - v2 for (v1, v2) in zip(self, other)))
 
     def __mul__(self, other: int):
