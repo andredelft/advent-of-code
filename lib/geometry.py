@@ -78,7 +78,11 @@ def polygon_area(nodes: list[Coordinate]):
 
 
 def manhattan_distance(coord_1: Coordinate, coord_2: Coordinate = (0, 0)):
-    return sum(abs(coord_1[i] - coord_2[i]) for i in range(2))
+    return sum(abs(coord_1[i] - coord_2[i]) for i in range(len(coord_1)))
+
+
+def euclidean_distance(coord_1: Coordinate, coord_2: Coordinate) -> float:
+    return sum(abs(coord_1[i] - coord_2[i]) ** 2 for i in range(len(coord_1))) ** 0.5
 
 
 def segment_intersection(segment_1: Segment, segment_2: Segment):
