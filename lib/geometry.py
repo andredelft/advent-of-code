@@ -1,3 +1,4 @@
+from lib.array import product
 from itertools import pairwise
 from typing import Self, Iterable
 from enum import Enum
@@ -83,6 +84,11 @@ def manhattan_distance(coord_1: Coordinate, coord_2: Coordinate = (0, 0)):
 
 def euclidean_distance(coord_1: Coordinate, coord_2: Coordinate) -> float:
     return sum(abs(coord_1[i] - coord_2[i]) ** 2 for i in range(len(coord_1))) ** 0.5
+
+
+def square_area(coord_1: Coordinate, coord_2: Coordinate):
+    """Square area spanned by the two input coordinates as opposite corners"""
+    return product(abs(coord_1[i] - coord_2[i]) + 1 for i in range(len(coord_1)))
 
 
 def segment_intersection(segment_1: Segment, segment_2: Segment):
