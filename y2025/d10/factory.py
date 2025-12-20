@@ -1,8 +1,10 @@
 from collections import Counter
-from lib.regex import parse_numbers
 from itertools import chain, product
 from more_itertools import powerset
 from functools import cache
+
+from lib.regex import parse_numbers
+from lib.math import infinity
 
 
 def parse_input(input_string: str):
@@ -52,7 +54,7 @@ def solve_b(input_string: str):
 
         @cache
         def get_joltage_requirements(*joltage_requirements: int):
-            min_presses = 1_000_000
+            min_presses = infinity
 
             if all(n == 0 for n in joltage_requirements):
                 return 0

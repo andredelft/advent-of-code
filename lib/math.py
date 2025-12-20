@@ -134,6 +134,36 @@ class Infinity(object):
     def __gt__(self, other):
         return not isinstance(other, Infinity)
 
+    def __add__(self, other: int):
+        return self
+
+    def __sub__(self, other: int):
+        return self
+
+    def __mul__(self, other: int):
+        if other == 0:
+            raise ValueError("Infinity multiplied by 0 is undetermined")
+
+        return self
+
+    def __rmul__(self, other: int):
+        return self.__mul__(other)
+
+    def __floordiv__(self, other: int):
+        return self
+
+    def __truediv__(self, other: int):
+        if isinstance(other, Infinity):
+            raise ValueError("Infinity divided by infinity is undetermined")
+
+        return self
+
+    def __len__(self):
+        return self
+
+    def __repr__(self):
+        return "∞"
+
 
 infinity = Infinity()
 
