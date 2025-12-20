@@ -34,26 +34,29 @@ def solve_a(input_string: str):
 
 
 def get_by_parity(buttons: list[list[int]], length: int):
-    parity_costs = {p: [] for p in product([0, 1], repeat=length)}
+    parity_dict: dict[tuple[int, ...], list[tuple[Counter, int]]] = {
+        p: [] for p in product([0, 1], repeat=length)
+    }
 
     for button_subset in powerset(buttons):
         c = Counter(chain(*button_subset))
 
         parity = tuple(c[i] % 2 for i in range(length))
 
-        parity_costs[parity].append((c, len(button_subset)))
+        parity_dict[parity].append((c, len(button_subset)))
 
-    return parity_costs
+    return parity_dict
 
 
+# https://www.reddit.com/r/adventofcode/comments/1pk87hl
 def solve_b(input_string: str):
     total = 0
 
     for _, buttons, joltage_requirements in parse_input(input_string):
-        parity_costs = get_by_parity(buttons, len(joltage_requirements))
+        parity_dict = get_by_parity(buttons, len(joltage_requirements))
 
         @cache
-        def get_joltage_requirements(*joltage_requirements: int):
+        def get_button_presses(joltage_requirements: tuple[int, ...]):
             min_presses = infinity
 
             if all(n == 0 for n in joltage_requirements):
@@ -64,19 +67,19 @@ def solve_b(input_string: str):
 
             parity = tuple(n % 2 for n in joltage_requirements)
 
-            for c, num_presses in parity_costs[parity]:
-                remaining_joltage_requirements = [
+            for c, num_presses in parity_dict[parity]:
+                remaining_joltage_requirements = tuple(
                     (n - c[i]) // 2 for (i, n) in enumerate(joltage_requirements)
-                ]
+                )
 
                 min_presses = min(
                     min_presses,
-                    2 * get_joltage_requirements(*remaining_joltage_requirements)
+                    2 * get_button_presses(remaining_joltage_requirements)
                     + num_presses,
                 )
 
             return min_presses
 
-        total += get_joltage_requirements(*joltage_requirements)
+        total += get_button_presses(joltage_requirements)
 
     return total
