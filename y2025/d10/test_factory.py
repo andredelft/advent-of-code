@@ -15,7 +15,7 @@ def test_input():
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 7
 
 
 @pytest.fixture
