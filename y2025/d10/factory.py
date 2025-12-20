@@ -23,12 +23,12 @@ def get_button_combination(indicators: list[int], buttons: list[list[int]]):
         c = Counter(chain(*button_subset))
 
         if all(c[i] % 2 == n for (i, n) in enumerate(indicators)):
-            len(button_subset)
+            return len(button_subset)
 
 
 def solve_a(input_string: str):
     return sum(
-        get_button_combination(indicators, buttons)[1]
+        get_button_combination(indicators, buttons)
         for indicators, buttons, _ in parse_input(input_string)
     )
 
