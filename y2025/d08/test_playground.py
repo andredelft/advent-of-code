@@ -32,16 +32,16 @@ def test_input():
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 40
 
 
 @pytest.fixture
 def expected_solution_b():
-    return None
+    return 25272
 
 
 def test_solve_a(test_input, expected_solution_a):
-    assert solve_a(test_input) == expected_solution_a
+    assert solve_a(test_input, 10) == expected_solution_a
 
 
 def test_solve_b(test_input, expected_solution_b):

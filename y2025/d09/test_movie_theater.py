@@ -3,7 +3,14 @@ from y2025.d09.movie_theater import solve_a, solve_b
 
 
 TEST_INPUT = """\
-"""
+7,1
+11,1
+11,7
+9,7
+9,5
+2,5
+2,3
+7,3"""
 
 
 @pytest.fixture
@@ -13,7 +20,7 @@ def test_input():
 
 @pytest.fixture
 def expected_solution_a():
-    return None
+    return 50
 
 
 @pytest.fixture

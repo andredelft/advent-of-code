@@ -10,14 +10,14 @@ def parse_input(input_string: str):
         yield tuple(parse_numbers(line))
 
 
-def solve_a(input_string: str):
+def solve_a(input_string: str, num_connections=1000):
     coords = parse_input(input_string)
     circuit_dict: dict[Coordinate, int] = dict()
     circuit_id = 1
 
     sorted_pairs = sorted(combinations(coords, 2), key=lambda p: euclidean_distance(*p))
 
-    for coord_1, coord_2 in sorted_pairs[:1000]:
+    for coord_1, coord_2 in sorted_pairs[:num_connections]:
         circuit_1 = circuit_dict.get(coord_1)
         circuit_2 = circuit_dict.get(coord_2)
 
