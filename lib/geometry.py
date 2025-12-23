@@ -78,17 +78,29 @@ def polygon_area(nodes: list[Coordinate]):
     )
 
 
+def iter_edge(c1: Coordinate, c2: Coordinate):
+    dimension = int(c1[1] == c2[1])
+    n_min, n_max = sorted([c1[1 - dimension], c2[1 - dimension]])
+
+    c = [0, 0]
+    c[dimension] = c1[dimension]
+
+    for n in range(n_min + 1, n_max):
+        c[1 - dimension] = n
+        yield Coordinate(*c)
+
+
 def manhattan_distance(coord_1: Coordinate, coord_2: Coordinate = (0, 0)):
-    return sum(abs(coord_1[i] - coord_2[i]) for i in range(len(coord_1)))
+    return sum(abs(n1 - n2) for n1, n2 in zip(coord_1, coord_2))
 
 
 def euclidean_distance(coord_1: Coordinate, coord_2: Coordinate) -> float:
-    return sum(abs(coord_1[i] - coord_2[i]) ** 2 for i in range(len(coord_1))) ** 0.5
+    return sum(abs(n1 - n2) ** 2 for n1, n2 in zip(coord_1, coord_2)) ** 0.5
 
 
 def square_area(coord_1: Coordinate, coord_2: Coordinate):
     """Square area spanned by the two input coordinates as opposite corners"""
-    return product(abs(coord_1[i] - coord_2[i]) + 1 for i in range(len(coord_1)))
+    return product(abs(n1 - n2) + 1 for n1, n2 in zip(coord_1, coord_2))
 
 
 def segment_intersection(segment_1: Segment, segment_2: Segment):
